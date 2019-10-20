@@ -11,5 +11,6 @@ routes.post('/sessions', SessionController.store);
 
 routes.use(AdminMiddleware);
 routes.post('/students', StudentController.store);
+routes.put('/students', StudentController.update);
 
 export default routes;
