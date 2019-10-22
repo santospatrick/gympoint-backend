@@ -6,6 +6,7 @@ import AdminMiddleware from './app/middlewares/admin';
 import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
+import HelpOrderController from './app/controllers/HelpOrderController';
 
 const routes = Router();
 
@@ -19,7 +20,13 @@ routes.post('/sessions', SessionController.store);
 routes.get('/students/:studentId/checkins', CheckinController.index);
 routes.post('/students/:studentId/checkins', CheckinController.store);
 
-// Private routes (need jwt)
+// Help orders
+routes.get('/students/:studentId/help-orders', HelpOrderController.index);
+routes.post('/students/:studentId/help-orders', HelpOrderController.store);
+
+/**
+ * Private routes (need jwt)
+ */
 routes.use(AdminMiddleware);
 
 // Students
