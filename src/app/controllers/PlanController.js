@@ -3,15 +3,11 @@ import Plan from '../models/Plan';
 
 class PlanController {
   async index(req, res) {
-    const plans = await Plan.findAll();
-    const data = plans.map(({ id, title, duration, price }) => ({
-      id,
-      title,
-      duration,
-      price,
-    }));
+    const plans = await Plan.findAll({
+      attributes: ['id', 'title', 'duration', 'price'],
+    });
 
-    return res.json(data);
+    return res.json(plans);
   }
 
   async update(req, res) {

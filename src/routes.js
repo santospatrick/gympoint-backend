@@ -17,6 +17,7 @@ routes.post('/sessions', SessionController.store);
 
 // Checkins
 routes.get('/students/:studentId/checkins', CheckinController.index);
+routes.post('/students/:studentId/checkins', CheckinController.store);
 
 // Private routes (need jwt)
 routes.use(AdminMiddleware);
