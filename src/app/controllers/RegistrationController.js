@@ -22,6 +22,111 @@ class RegistrationController {
     return res.json(data);
   }
 
+  async update(req, res) {
+    const schema = Yup.object().shape({
+      start_date: Yup.date(),
+      student_id: Yup.number().positive(),
+      plan_id: Yup.number().positive(),
+    });
+
+    if (!(await schema.isValid(req.body))) {
+      return res.status(400).json({ error: 'Validation failed' });
+    }
+
+    const { start_date, student_id, plan_id } = req.body;
+
+    let student = null;
+
+    if (student_id) {
+      student = await Student.findByPk(student_id);
+
+      if (!student) {
+        return res.status(400).json({ error: 'Student does not exist' });
+      }
+    }
+
+    let newPlan = null;
+
+    if (plan_id) {
+      newPlan = await Plan.findByPk(plan_id);
+
+      if (!newPlan) {
+        return res.status(400).json({ error: 'Plan does not exist' });
+      }
+    }
+
+    const registration = await Registration.findByPk(req.params.id);
+
+    if (!registration) {
+      return res.status(400).json({ error: 'Registration does not exist' });
+    }
+
+    /**
+     * Trying to update registration to another student_id
+     */
+    if (student && registration.student_id !== student.id) {
+      /**
+       * One student can't have two plans
+       */
+      const studentAlreadyHasPlan = await Registration.findOne({
+        where: { student_id },
+      });
+
+      if (studentAlreadyHasPlan) {
+        return res.status(400).json({ error: 'Student already has a plan' });
+      }
+    }
+
+    const newRegistration = { start_date, student_id, plan_id };
+
+    /**
+     * New plan not provided,
+     * search for previous plan
+     */
+    if (!newPlan) {
+      newPlan = await Plan.findByPk(registration.plan_id);
+
+      if (!newPlan) {
+        return res.status(400).json({
+          error: "No previous plan, can't calculate price and duration",
+        });
+      }
+    }
+
+    /**
+     * User wants to update start_date of registration
+     */
+    if (start_date) {
+      newRegistration.end_date = addMonths(
+        parseISO(start_date),
+        newPlan.duration
+      );
+      newRegistration.price = newPlan.price * newPlan.duration;
+    }
+
+    if (plan_id) {
+      newRegistration.price = newPlan.price * newPlan.duration;
+    }
+
+    const {
+      id,
+      student_id: new_student_id,
+      plan_id: new_plan_id,
+      start_date: new_start_date,
+      end_date,
+      price,
+    } = await registration.update(newRegistration);
+
+    return res.json({
+      id,
+      student_id: new_student_id,
+      plan_id: new_plan_id,
+      start_date: new_start_date,
+      end_date,
+      price,
+    });
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       start_date: Yup.date().required(),
@@ -51,12 +156,12 @@ class RegistrationController {
       return res.status(400).json({ error: 'Plan does not exist' });
     }
 
-    const userAlreadyHasPlan = await Registration.findOne({
+    const studentAlreadyHasPlan = await Registration.findOne({
       where: { student_id },
     });
 
-    if (userAlreadyHasPlan) {
-      return res.status(400).json({ error: 'User already has a plan' });
+    if (studentAlreadyHasPlan) {
+      return res.status(400).json({ error: 'Student already has a plan' });
     }
 
     const end_date = addMonths(parseISO(start_date), plan.duration);
