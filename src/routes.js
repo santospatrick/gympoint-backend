@@ -5,13 +5,23 @@ import StudentController from './app/controllers/StudentController';
 import AdminMiddleware from './app/middlewares/admin';
 import PlanController from './app/controllers/PlanController';
 import RegistrationController from './app/controllers/RegistrationController';
+import CheckinController from './app/controllers/CheckinController';
 
 const routes = Router();
 
+// Users signup
 routes.post('/users', UserController.store);
+
+// Session
 routes.post('/sessions', SessionController.store);
 
+// Checkins
+routes.get('/students/:studentId/checkins', CheckinController.index);
+
+// Private routes (need jwt)
 routes.use(AdminMiddleware);
+
+// Students
 routes.post('/students', StudentController.store);
 routes.put('/students', StudentController.update);
 
