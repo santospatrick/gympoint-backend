@@ -1,9 +1,27 @@
 import * as Yup from 'yup';
+import { addMonths, parseISO } from 'date-fns';
+
 import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Registration from '../models/Registration';
 
 class RegistrationController {
+  async index(req, res) {
+    const registrations = await Registration.findAll();
+    const data = registrations.map(
+      ({ id, plan_id, student_id, start_date, end_date, price }) => ({
+        id,
+        plan_id,
+        student_id,
+        start_date,
+        end_date,
+        price,
+      })
+    );
+
+    return res.json(data);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       start_date: Yup.date().required(),
@@ -41,11 +59,10 @@ class RegistrationController {
       return res.status(400).json({ error: 'User already has a plan' });
     }
 
-    // TODO: somar meses a partir do "start_date" (precisa do date-fns)
-    const end_date = '2020-01-22T12:00:00-03:00';
+    const end_date = addMonths(parseISO(start_date), plan.duration);
     const price = plan.price * plan.duration;
 
-    const registration = await Registration.create({
+    const { id } = await Registration.create({
       student_id,
       plan_id,
       start_date,
@@ -55,7 +72,7 @@ class RegistrationController {
 
     // TODO: enviar e-mail com informações da matrícula
 
-    return res.json(registration);
+    return res.json({ id, student_id, plan_id, start_date, end_date, price });
   }
 }
 
