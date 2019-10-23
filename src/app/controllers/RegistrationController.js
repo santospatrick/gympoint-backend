@@ -5,6 +5,9 @@ import Student from '../models/Student';
 import Plan from '../models/Plan';
 import Registration from '../models/Registration';
 
+import Queue from '../../lib/Queue';
+import NewRegistrationMail from '../jobs/NewRegistrationMail';
+
 class RegistrationController {
   async index(req, res) {
     const registrations = await Registration.findAll();
@@ -175,7 +178,11 @@ class RegistrationController {
       price,
     });
 
-    // TODO: enviar e-mail com informações da matrícula
+    await Queue.add(NewRegistrationMail.key, {
+      student: studentExists,
+      end_date,
+      price,
+    });
 
     return res.json({ id, student_id, plan_id, start_date, end_date, price });
   }
