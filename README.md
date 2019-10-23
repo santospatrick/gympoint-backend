@@ -7,9 +7,15 @@ Desafio do app "Gympoint" do curso GoStack da Rockseat
 - [Insomnia](#Insomnia)
 
 ## Setup
-```
+1. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
+
+2. Rode os seguintes comandos:
+```bash
 yarn
 yarn dev
+
+# Para iniciar fila de e-mails no redis
+yarn queue
 ```
 
 ## VSCode (Debug)
