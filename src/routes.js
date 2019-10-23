@@ -8,6 +8,7 @@ import RegistrationController from './app/controllers/RegistrationController';
 import CheckinController from './app/controllers/CheckinController';
 import HelpOrderController from './app/controllers/HelpOrderController';
 import AnswerController from './app/controllers/AnswerController';
+import AvailableController from './app/controllers/AvailableController';
 
 const routes = Router();
 
@@ -48,5 +49,8 @@ routes.delete('/registrations/:id', RegistrationController.delete);
 
 // Answer question
 routes.post('/help-orders/:helpOrderId/answer', AnswerController.store);
+
+// Questions not answered yet
+routes.get('/students/help-orders/available', AvailableController.index);
 
 export default routes;
