@@ -10,19 +10,19 @@ import NewRegistrationMail from '../jobs/NewRegistrationMail';
 
 class RegistrationController {
   async index(req, res) {
-    const registrations = await Registration.findAll();
-    const data = registrations.map(
-      ({ id, plan_id, student_id, start_date, end_date, price }) => ({
-        id,
-        plan_id,
-        student_id,
-        start_date,
-        end_date,
-        price,
-      })
-    );
+    const registrations = await Registration.findAll({
+      attributes: [
+        'id',
+        'plan_id',
+        'student_id',
+        'start_date',
+        'end_date',
+        'price',
+        'active',
+      ],
+    });
 
-    return res.json(data);
+    return res.json(registrations);
   }
 
   async update(req, res) {

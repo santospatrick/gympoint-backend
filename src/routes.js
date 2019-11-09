@@ -32,6 +32,7 @@ routes.post('/students/:studentId/help-orders', HelpOrderController.store);
 routes.use(AdminMiddleware);
 
 // Students
+routes.get('/students', StudentController.index);
 routes.post('/students', StudentController.store);
 routes.put('/students', StudentController.update);
 
