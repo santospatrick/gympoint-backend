@@ -1,3 +1,4 @@
+import Sequelize from 'sequelize';
 import * as Yup from 'yup';
 
 import Student from '../models/Student';
@@ -7,7 +8,15 @@ class StudentController {
     const { q: name } = req.query;
 
     const users = await Student.findAll({
-      where: name ? { name } : null,
+      where: name
+        ? {
+            name: Sequelize.where(
+              Sequelize.fn('LOWER', Sequelize.col('name')),
+              'LIKE',
+              `%${name.toLowerCase()}%`
+            ),
+          }
+        : null,
     });
 
     res.json(users);
