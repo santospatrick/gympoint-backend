@@ -92,6 +92,18 @@ class StudentController {
 
     return res.json({ id, name, email, age, weight, height });
   }
+
+  async delete(req, res) {
+    const student = await Student.findByPk(req.params.id);
+
+    if (!student) {
+      return res.status(400).json({ message: 'Student does not exist' });
+    }
+
+    await student.destroy();
+
+    return res.sendStatus(200);
+  }
 }
 
 export default new StudentController();
