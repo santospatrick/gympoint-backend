@@ -10,6 +10,13 @@ import NewRegistrationMail from '../jobs/NewRegistrationMail';
 
 class RegistrationController {
   async index(req, res) {
+    const { id } = req.params;
+
+    if (id) {
+      const registration = await Registration.findByPk(id);
+      return res.json(registration);
+    }
+
     const registrations = await Registration.findAll({
       attributes: [
         'id',
