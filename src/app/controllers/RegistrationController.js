@@ -27,6 +27,7 @@ class RegistrationController {
         'price',
         'active',
       ],
+      include: [{ model: Student, as: 'student' }, { model: Plan, as: 'plan' }],
     });
 
     return res.json(registrations);
