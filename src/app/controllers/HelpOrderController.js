@@ -19,7 +19,7 @@ class HelpOrderController {
 
     const helpOrders = await HelpOrder.findAll({
       where: { student_id: student.id },
-      attributes: ['id', 'question', 'answer', 'answer_at'],
+      attributes: ['id', 'question', 'answer', 'answer_at', 'created_at'],
     });
 
     return res.json(helpOrders);
