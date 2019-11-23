@@ -12,6 +12,8 @@ import AvailableController from './app/controllers/AvailableController';
 
 const routes = Router();
 
+routes.get('/', (req, res) => res.send('ok'));
+
 // Users signup
 routes.post('/users', UserController.store);
 
