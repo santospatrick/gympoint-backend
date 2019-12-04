@@ -19,7 +19,7 @@ docker run --name redisgympoint -p 6379:6379 -d -t redis:alpine
 
 4. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
 
-5. Preencha o banco com uma conta de admin
+5. Preencha o banco com dados padrão
 ```bash
 yarn sequelize db:seed:all
 ```
