@@ -45,4 +45,12 @@ yarn dev:debug
 ![VSCode debug](docs/debug.png)
 
 ## Insomnia
-[Baixe aqui](https://raw.githubusercontent.com/santospatrick/gympoint-backend/master/json/Insomnia_2019-10-19.json) o arquivo .json do projeto do Insomnia para testar as requisições
+1. [Baixe aqui](https://raw.githubusercontent.com/santospatrick/gympoint-backend/master/json/Insomnia_2019-12-03.json) o arquivo .json do projeto do Insomnia para testar as requisições
+
+2. Importe a collection dentro do Insomnia
+
+3. Crie as variáveis `base_url e token` no ambiente do Insomnia
+
+![Ambiente Insomnia](docs/insomnia-ambiente.png)
+
+![Variáveis Insomnia](docs/insomnia-variaveis.png)
