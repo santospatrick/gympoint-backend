@@ -15,14 +15,16 @@ docker run --name redisgympoint -p 6379:6379 -d -t redis:alpine
 
 2. Crie uma database chamada `gympoint` e aponte corretamente seu nome no `.env`
 
-3. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
+3. Crie uma conta no [mailtrap](mailtrap.io) e um inbox. Após finalizar, copie suas credenciais e preencha as variáveis `MAIL_HOST, MAIL_PORT, MAIL_USER e MAIL_USER` no `.env`
 
-4. Preencha o banco com uma conta de admin
+4. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
+
+5. Preencha o banco com uma conta de admin
 ```bash
 yarn sequelize db:seed:all
 ```
 
-5. Rode os seguintes comandos:
+6. Rode os seguintes comandos:
 ```bash
 yarn
 yarn dev
