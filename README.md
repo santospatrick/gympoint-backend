@@ -7,9 +7,22 @@ Desafio do app "Gympoint" do curso GoStack da Rockseat
 - [Insomnia](#Insomnia)
 
 ## Setup
-1. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
+1. Suba um banco `postgres` e um banco `redis` (preferível com `docker`)
+```bash
+docker run --name database -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres:11
+docker run --name redisgympoint -p 6379:6379 -d -t redis:alpine
+```
 
-2. Rode os seguintes comandos:
+2. Crie uma database chamada `gympoint` e aponte corretamente seu nome no `.env`
+
+3. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
+
+4. Preencha o banco com uma conta de admin
+```bash
+yarn sequelize db:seed:all
+```
+
+5. Rode os seguintes comandos:
 ```bash
 yarn
 yarn dev
