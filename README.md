@@ -45,7 +45,7 @@ yarn dev:debug
 ![VSCode debug](docs/debug.png)
 
 ## Insomnia
-1. [Baixe aqui](https://raw.githubusercontent.com/santospatrick/gympoint-backend/master/json/Insomnia_2019-12-03.json) o arquivo .json do projeto do Insomnia para testar as requisições
+1. [Baixe aqui](https://raw.githubusercontent.com/santospatrick/gympoint-backend/master/json/insomnia.json) o arquivo .json do projeto do Insomnia para testar as requisições
 
 2. Importe a collection dentro do Insomnia
 
