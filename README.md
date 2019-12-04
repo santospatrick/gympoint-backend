@@ -15,7 +15,7 @@ docker run --name redisgympoint -p 6379:6379 -d -t redis:alpine
 
 2. Crie uma database chamada `gympoint` e aponte corretamente seu nome no `.env`
 
-3. Crie uma conta no [mailtrap](mailtrap.io) e um inbox. Após finalizar, copie suas credenciais e preencha as variáveis `MAIL_HOST, MAIL_PORT, MAIL_USER e MAIL_USER` no `.env`
+3. Crie uma conta no [mailtrap](mailtrap.io) e um inbox. Após finalizar, copie suas credenciais e preencha as variáveis `MAIL_HOST, MAIL_PORT, MAIL_USER e MAIL_PASS` no `.env`
 
 4. Configure o arquivo `.env` corretamente (preenchendo as variáveis encontradas no `.env.example`)
 
